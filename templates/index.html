@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS_PORTFOLIO | Process Control Engineer</title>
+    <meta name="description"
+        content="Portfolio of a Data-Driven Process Control Engineer. Specializing in SCADA, APC, and industrial automation.">
+    <!-- Icon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@300..700&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+</head>
+
+<body>
+    <div id="boot-overlay" class="boot-overlay">
+        <div class="terminal-text">
+            <span>> INITIALIZING HMI SYSTEM...</span>
+            <span>> LOADING PROCESS VARIABLES...</span>
+            <span>> CONNECTING TO KINETIC-PLASMA CIRCUIT_01...</span>
+            <span class="blinking-cursor">_</span>
+        </div>
+    </div>
+
+    <!-- Background Grid -->
+    <div class="sys-grid"></div>
+
+    <!-- Navigation Panel -->
+    <nav class="nav-panel">
+        <div class="nav-header">
+            <span class="sys-id">OP_ID: Zaps_007</span>
+            <div class="status-indicator">
+                <div class="status-led led-green"></div>
+                <span>SYS_ONLINE</span>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link active" data-target="home">[00_HOME]</a></li>
+            <li><a href="#projects" class="nav-link" data-target="projects">[01_PROJECTS]</a></li>
+            <li><a href="#about" class="nav-link" data-target="about">[02_ABOUT]</a></li>
+            <li><a href="#contact" class="nav-link" data-target="contact">[03_CONTACT]</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <!-- HOME SECTION -->
+        <section id="home" class="sys-section active-section">
+            <div class="panel header-panel">
+                <div class="panel-decorator top-left"></div>
+                <div class="panel-decorator bottom-right"></div>
+
+                <p class="mono-label">> ROLE: PROCESS_CONTROL_ENGINEER</p>
+                <h1 class="glitch" data-text="Roel Zaportiza">Roel Zaportiza</h1>
+                <p class="subtitle">Control System Engineer. Architecting advanced logic structures during off-duty cycles.</p>
+
+                <div class="data-readouts">
+                    <div class="readout">
+                        <span class="label">SYS_UPTIME</span>
+                        <span class="value" id="uptime-val">99.98%</span>
+                    </div>
+                    <div class="readout">
+                        <span class="label">LOOP_EFFICIENCY</span>
+                        <span class="value highlight">OPT_LEVEL_4</span>
+                    </div>
+                    <div class="readout">
+                        <span class="label">PV_SP_DEVIATION</span>
+                        <span class="value alert">&lt; 0.5%</span>
+                    </div>
+                </div>
+
+                <a href="#projects" class="action-btn">ACCESS_PROJECTS <span class="arr">>></span></a>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION -->
+        <section id="projects" class="sys-section">
+            <div class="section-title">
+                <h2>[01_PROJECTS_DB]</h2>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <article class="project-panel">
+                    <div class="panel-header">
+                        <span class="pid">PRJ-01: In-line Booster Pump</span>
+                        <span class="status complete">Deployed</span>
+                    </div>
+                    <img src="{{ url_for('static', filename='assets/images/work01-hover1.jpg') }}" alt="In-line Booster pump" class="sys-img">
+                    <div class="panel-body">
+                        <h3>In-line Booster Pump Automation</h3>
+                        <p>Upgraded In-line booster pump from conventional electrical control to PLC control using
+                            Siemens S7-1500.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Siemens S7-1500</span>
+                            <span class="tech-tag">Industrial Automation</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-panel">
+                    <div class="panel-header">
+                        <span class="pid">PRJ-02: PLC Upgrade</span>
+                        <span class="status complete">Deployed</span>
+                    </div>
+                    <img src="{{ url_for('static', filename='assets/images/work02-hover1.JPG') }}" alt="Resin Shop PLC" class="sys-img">
+                    <div class="panel-body">
+                        <h3>Upgrade PLC for Resin Shop</h3>
+                        <p>Toyota Motor Philippines: Upgraded Omron PLC from CVM1 to CS1 series in the Resin shop
+                            control system.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Omron PLC</span>
+                            <span class="tech-tag">Control Migration</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-panel">
+                    <div class="panel-header">
+                        <span class="pid">PRJ-03: PLC Modification</span>
+                        <span class="status complete">Deployed</span>
+                    </div>
+                    <img src="{{ url_for('static', filename='assets/images/work03-hover1.jpg') }}" alt="Unilever PLC" class="sys-img">
+                    <div class="panel-body">
+                        <h3>Addtional controls for Power Dosing</h3>
+                        <p>Modified S7-300 and S7-400 PLCs to add additional AS-i valves and handle new system cycles.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Siemens S7-300/400</span>
+                            <span class="tech-tag">AS-i Valves</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="project-panel">
+                    <div class="panel-header">
+                        <span class="pid">PRJ-04: Back-end API</span>
+                        <span class="status active">Active</span>
+                    </div>
+                    <img src="{{ url_for('static', filename='assets/images/work02-hover.jpg') }}" alt="Custom Website" class="sys-img">
+                    <div class="panel-body">
+                        <h3>Custom Portfolio Website</h3>
+                        <p>Created a custom web server using a robust backend architecture and a lightweight web
+                            framework.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Backend Server</span>
+                            <span class="tech-tag">Web Framework</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="sys-section">
+            <div class="about-panel panel">
+                <div class="panel-decorator top-right"></div>
+                <h2>[02_OPERATOR_BIO]</h2>
+
+                <div class="about-content">
+                    <div class="text-block">
+                        <p>Electronics Engineer and Control System Engineer Supervisor with a passion for industrial
+                            automation, IIoT, and advanced software development.</p>
+                        <ul class="sys-list">
+                            <li><strong>EDUCATION:</strong> BS in Electronics Engineering, University of Science and
+                                Technology of Southern Philippines (USTP)</li>
+                            <li><strong>EXPERIENCE:</strong> Control System Engineer Supervisor at Exponent Controls and
+                                Electrical Corp. | Cadet Engineer at STEAG State Power.</li>
+                            <li><strong>INTERESTS:</strong> Industrial/Home Automation, IIoT, NASA, PC Building, Stock
+                                Trading.</li>
+                        </ul>
+                    </div>
+                    <div class="profile-img-container">
+                        <img src="{{ url_for('static', filename='assets/images/profil3.jpg') }}" alt="Roel Zaportiza">
+                        <div class="panel-decorator top-left" style="border-color: var(--neon-amber);"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="sys-section">
+            <div class="contact-panel panel">
+                <h2>[03_SECURE_COMMS]</h2>
+                <form class="hmi-form" action="/submit_form" method="POST">
+                    <div class="form-group">
+                        <label for="sender_id">SENDER_ID (Name)</label>
+                        <input type="text" id="sender_id" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comm_link">COMM_LINK (Email)</label>
+                        <input type="email" id="comm_link" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payload">PAYLOAD (Message)</label>
+                        <textarea id="payload" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="action-btn block-btn">INITIATE_TRANSMISSION</button>
+                </form>
+                <div class="direct-links">
+                    <p class="mono-label">CONTACT_CHANNELS:</p>
+                    <a href="mailto:roel.zaportiza@gmail.com" class="sys-link">roel.zaportiza@gmail.com</a> |
+                    <span style="color: var(--text-dim); font-family: var(--font-mono);">+639171536043</span> |
+                    <span style="color: var(--text-dim); font-family: var(--font-mono);">Cagayan de Oro City,
+                        Philippines</span><br><br>
+                    <a href="https://www.linkedin.com/in/roel-zaportiza-05a09a62/" class="sys-link"
+                        target="_blank">LinkedIn</a> |
+                    <a href="https://www.facebook.com/leorzaps/" class="sys-link" target="_blank">Facebook</a> |
+                    <a href="https://twitter.com/RoelZap" class="sys-link" target="_blank">Twitter</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+
+</html>
