@@ -30,25 +30,111 @@
         </div>
     </div>
 
-    <!-- Background Grid -->
-    <div class="sys-grid"></div>
+    <!-- Particle Network Background -->
+    <canvas id="particle-network" class="particle-network"></canvas>
 
     <!-- Navigation Panel -->
-    <nav class="nav-panel">
+    <nav class="nav-panel" aria-label="Main navigation">
         <div class="nav-header">
             <span class="sys-id">OP_ID: Zaps_007</span>
             <div class="status-indicator">
                 <div class="status-led led-green"></div>
                 <span>SYS_ONLINE</span>
             </div>
+            <button class="hamburger" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-links">
             <li><a href="#home" class="nav-link active" data-target="home">[00_HOME]</a></li>
             <li><a href="#projects" class="nav-link" data-target="projects">[01_PROJECTS]</a></li>
             <li><a href="#about" class="nav-link" data-target="about">[02_ABOUT]</a></li>
             <li><a href="#contact" class="nav-link" data-target="contact">[03_CONTACT]</a></li>
         </ul>
     </nav>
+
+    <!-- Animated SVG Circuit Lines -->
+    <svg class="circuit-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+            <!-- Glow filter for active traces -->
+            <filter id="circuit-glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <!-- Energy pulse gradient -->
+            <linearGradient id="pulse-grad-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="transparent"/>
+                <stop offset="40%" stop-color="#00E5FF"/>
+                <stop offset="60%" stop-color="#00E5FF"/>
+                <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+            <linearGradient id="pulse-grad-amber" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="transparent"/>
+                <stop offset="40%" stop-color="#FFAB00"/>
+                <stop offset="60%" stop-color="#FFAB00"/>
+                <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+        </defs>
+
+        <!-- CIRCUIT TRACE 1: Home — horizontal out, down bend, horizontal to content -->
+        <path class="circuit-trace trace-base" d="M 245,160 L 280,160 L 280,120 L 330,120"/>
+        <path class="circuit-trace trace-pulse pulse-1" d="M 245,160 L 280,160 L 280,120 L 330,120"/>
+        <circle class="circuit-node" cx="245" cy="160" r="3"/>
+        <circle class="circuit-node" cx="280" cy="160" r="2"/>
+        <circle class="circuit-node" cx="280" cy="120" r="2"/>
+        <circle class="circuit-node node-end" cx="330" cy="120" r="4"/>
+
+        <!-- CIRCUIT TRACE 2: Projects — longer route with double bend -->
+        <path class="circuit-trace trace-base" d="M 245,210 L 295,210 L 295,280 L 350,280"/>
+        <path class="circuit-trace trace-pulse pulse-2" d="M 245,210 L 295,210 L 295,280 L 350,280"/>
+        <circle class="circuit-node" cx="245" cy="210" r="3"/>
+        <circle class="circuit-node" cx="295" cy="210" r="2"/>
+        <circle class="circuit-node" cx="295" cy="280" r="2"/>
+        <circle class="circuit-node node-end" cx="350" cy="280" r="4"/>
+
+        <!-- CIRCUIT TRACE 3: About — mid-level route -->
+        <path class="circuit-trace trace-base" d="M 245,265 L 268,265 L 268,400 L 310,400 L 310,440 L 350,440"/>
+        <path class="circuit-trace trace-pulse pulse-3" d="M 245,265 L 268,265 L 268,400 L 310,400 L 310,440 L 350,440"/>
+        <circle class="circuit-node" cx="245" cy="265" r="3"/>
+        <circle class="circuit-node" cx="268" cy="265" r="2"/>
+        <circle class="circuit-node" cx="268" cy="400" r="2"/>
+        <circle class="circuit-node" cx="310" cy="400" r="2"/>
+        <circle class="circuit-node" cx="310" cy="440" r="2"/>
+        <circle class="circuit-node node-end" cx="350" cy="440" r="4"/>
+
+        <!-- CIRCUIT TRACE 4: Contact — bottom route -->
+        <path class="circuit-trace trace-base" d="M 245,320 L 260,320 L 260,560 L 290,560 L 290,600 L 350,600"/>
+        <path class="circuit-trace trace-pulse pulse-4" d="M 245,320 L 260,320 L 260,560 L 290,560 L 290,600 L 350,600"/>
+        <circle class="circuit-node" cx="245" cy="320" r="3"/>
+        <circle class="circuit-node" cx="260" cy="320" r="2"/>
+        <circle class="circuit-node" cx="260" cy="560" r="2"/>
+        <circle class="circuit-node" cx="290" cy="560" r="2"/>
+        <circle class="circuit-node" cx="290" cy="600" r="2"/>
+        <circle class="circuit-node node-end" cx="350" cy="600" r="4"/>
+
+        <!-- IC CHIP decorative element near nav -->
+        <rect class="circuit-chip" x="255" y="340" width="30" height="20" rx="2"/>
+        <line class="circuit-chip-pin" x1="260" y1="340" x2="260" y2="334"/>
+        <line class="circuit-chip-pin" x1="270" y1="340" x2="270" y2="334"/>
+        <line class="circuit-chip-pin" x1="280" y1="340" x2="280" y2="334"/>
+        <line class="circuit-chip-pin" x1="260" y1="360" x2="260" y2="366"/>
+        <line class="circuit-chip-pin" x1="270" y1="360" x2="270" y2="366"/>
+        <line class="circuit-chip-pin" x1="280" y1="360" x2="280" y2="366"/>
+        <text class="circuit-chip-label" x="270" y="353" text-anchor="middle">MCU</text>
+
+        <!-- Decorative horizontal bus bar -->
+        <line class="circuit-trace trace-base" x1="250" y1="500" x2="350" y2="500"/>
+        <line class="circuit-trace trace-pulse pulse-bus" x1="250" y1="500" x2="350" y2="500"/>
+        <circle class="circuit-node" cx="270" cy="500" r="2"/>
+        <circle class="circuit-node" cx="310" cy="500" r="2"/>
+        <circle class="circuit-node" cx="350" cy="500" r="2"/>
+
+        <!-- Small branch from bus to chip -->
+        <path class="circuit-trace trace-base" d="M 270,500 L 270,366"/>
+        <path class="circuit-trace trace-pulse pulse-5" d="M 270,500 L 270,366"/>
+    </svg>
 
     <main class="main-content">
         <!-- HOME SECTION -->
@@ -59,8 +145,8 @@
 
                 <p class="mono-label">> ROLE: PROCESS_CONTROL_ENGINEER</p>
                 <h1 class="glitch" data-text="Roel Zaportiza">Roel Zaportiza</h1>
-                <p class="subtitle">Control System Engineer. Architecting advanced logic structures during off-duty
-                    cycles.</p>
+                <p class="subtitle typing-target" id="subtitle-text"
+                    data-text="Control System Engineer. Architecting advanced logic structures during off-duty cycles."></p>
 
                 <div class="data-readouts">
                     <div class="readout">
@@ -74,6 +160,24 @@
                     <div class="readout">
                         <span class="label">PV_SP_DEVIATION</span>
                         <span class="value alert">&lt; 0.5%</span>
+                    </div>
+                </div>
+
+                <!-- Live PID Trend Chart -->
+                <div class="pid-trend-container">
+                    <div class="pid-trend-header">
+                        <span class="pid-trend-title">LOOP_01: LEVEL CONTROL — LIVE TREND</span>
+                        <div class="pid-trend-legend">
+                            <span class="legend-item legend-sp">■ SP</span>
+                            <span class="legend-item legend-pv">■ PV</span>
+                            <span class="legend-item legend-op">■ OP%</span>
+                        </div>
+                    </div>
+                    <canvas id="pid-trend-canvas" width="800" height="200"></canvas>
+                    <div class="pid-trend-footer">
+                        <span class="pid-tag">TAG: LIC-101</span>
+                        <span class="pid-mode" id="pid-mode">MODE: AUTO</span>
+                        <span class="pid-values" id="pid-live-values">SP: -- | PV: -- | OP: --%</span>
                     </div>
                 </div>
 
@@ -94,8 +198,8 @@
                         <span class="pid">PRJ-01: In-line Booster Pump</span>
                         <span class="status complete">Deployed</span>
                     </div>
-                    <img src="{{ url_for('static', filename='assets/images/work01-hover1.jpg') }}"
-                        alt="In-line Booster pump" class="sys-img">
+                    <img src="{{ url_for('static', filename='assets/images/work01-hover1.webp') }}"
+                        alt="In-line Booster pump" class="sys-img" loading="lazy">
                     <div class="panel-body">
                         <h3>In-line Booster Pump Automation</h3>
                         <p>Upgraded In-line booster pump from conventional electrical control to PLC control using
@@ -113,8 +217,8 @@
                         <span class="pid">PRJ-02: PLC Upgrade</span>
                         <span class="status complete">Deployed</span>
                     </div>
-                    <img src="{{ url_for('static', filename='assets/images/work02-hover1.JPG') }}" alt="Resin Shop PLC"
-                        class="sys-img">
+                    <img src="{{ url_for('static', filename='assets/images/work02-hover1.webp') }}" alt="Resin Shop PLC"
+                        class="sys-img" loading="lazy">
                     <div class="panel-body">
                         <h3>Upgrade PLC for Resin Shop</h3>
                         <p>Toyota Motor Philippines: Upgraded Omron PLC from CVM1 to CS1 series in the Resin shop
@@ -132,8 +236,8 @@
                         <span class="pid">PRJ-03: PLC Modification</span>
                         <span class="status complete">Deployed</span>
                     </div>
-                    <img src="{{ url_for('static', filename='assets/images/work03-hover1.jpg') }}" alt="Unilever PLC"
-                        class="sys-img">
+                    <img src="{{ url_for('static', filename='assets/images/work03-hover1.webp') }}" alt="Unilever PLC"
+                        class="sys-img" loading="lazy">
                     <div class="panel-body">
                         <h3>Addtional controls for Power Dosing</h3>
                         <p>Modified S7-300 and S7-400 PLCs to add additional AS-i valves and handle new system cycles.
@@ -151,8 +255,8 @@
                         <span class="pid">PRJ-04: Back-end API</span>
                         <span class="status active">Active</span>
                     </div>
-                    <img src="{{ url_for('static', filename='assets/images/work02-hover.jpg') }}" alt="Custom Website"
-                        class="sys-img">
+                    <img src="{{ url_for('static', filename='assets/images/work02-hover.webp') }}" alt="Custom Website"
+                        class="sys-img" loading="lazy">
                     <div class="panel-body">
                         <h3>Custom Portfolio Website</h3>
                         <p>Created a custom web server using a robust backend architecture and a lightweight web
@@ -170,8 +274,8 @@
                         <span class="pid">PRJ-05: Plant Optimization</span>
                         <span class="status complete">Deployed</span>
                     </div>
-                    <img src="{{ url_for('static', filename='assets/images/Capricorn-Karlawinda.png') }}"
-                        alt="Gold Processing Plant" class="sys-img">
+                    <img src="{{ url_for('static', filename='assets/images/Capricorn-Karlawinda.webp') }}"
+                        alt="Gold Processing Plant" class="sys-img" loading="lazy">
                     <div class="panel-body">
                         <h3>Improved Gold Processing Plant Performance & Stability</h3>
                         <p>Systematically tuning all plant 10 PIDs.</p>
@@ -205,7 +309,7 @@
                         </ul>
                     </div>
                     <div class="profile-img-container">
-                        <img src="{{ url_for('static', filename='assets/images/profil3.jpg') }}" alt="Roel Zaportiza">
+                        <img src="{{ url_for('static', filename='assets/images/profil3.webp') }}" alt="Roel Zaportiza" loading="lazy">
                         <div class="panel-decorator top-left" style="border-color: var(--neon-amber);"></div>
                     </div>
                 </div>
@@ -219,15 +323,15 @@
                 <form class="hmi-form" action="/submit_form" method="POST">
                     <div class="form-group">
                         <label for="sender_id">SENDER_ID (Name)</label>
-                        <input type="text" id="sender_id" name="subject" required>
+                        <input type="text" id="sender_id" name="subject" required aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="comm_link">COMM_LINK (Email)</label>
-                        <input type="email" id="comm_link" name="email" required>
+                        <input type="email" id="comm_link" name="email" required aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="payload">PAYLOAD (Message)</label>
-                        <textarea id="payload" name="message" rows="4" required></textarea>
+                        <textarea id="payload" name="message" rows="4" required aria-required="true"></textarea>
                     </div>
                     <button type="submit" class="action-btn block-btn">INITIATE_TRANSMISSION</button>
                 </form>
@@ -238,13 +342,21 @@
                     <span style="color: var(--text-dim); font-family: var(--font-mono);">Perth, Western
                         Australia</span><br><br>
                     <a href="https://www.linkedin.com/in/roel-zaportiza-05a09a62/" class="sys-link"
-                        target="_blank">LinkedIn</a> |
-                    <a href="https://www.facebook.com/leorzaps/" class="sys-link" target="_blank">Facebook</a> |
-                    <a href="https://twitter.com/RoelZap" class="sys-link" target="_blank">Twitter</a>
+                        target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                    <a href="https://www.facebook.com/leorzaps/" class="sys-link" target="_blank" rel="noopener noreferrer">Facebook</a> |
+                    <a href="https://twitter.com/RoelZap" class="sys-link" target="_blank" rel="noopener noreferrer">Twitter</a>
                 </div>
             </div>
         </section>
+        <!-- SYSTEM FOOTER -->
+        <footer class="sys-footer">
+            <span class="sys-build">SYS_BUILD: v2.1.0 | FLASK_RUNTIME</span>
+            <span class="sys-clock" id="sys-clock">--:--:--</span>
+        </footer>
     </main>
+
+    <!-- Status Notifications -->
+    <div class="sys-notifications" id="sys-notifications" aria-live="polite"></div>
 
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 </body>

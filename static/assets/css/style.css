@@ -34,19 +34,32 @@ body {
     overflow-x: hidden;
 }
 
-/* BACKGROUND GRID */
-.sys-grid {
+/* PARTICLE NETWORK BACKGROUND */
+.particle-network {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: 
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-    background-size: 30px 30px;
     z-index: -1;
     pointer-events: none;
+    background-color: transparent;
+}
+
+/* CRT SCANLINE OVERLAY */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.03) 0px,
+        rgba(0,0,0,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events: none;
+    z-index: 999;
 }
 
 /* TYPOGRAPHY */
@@ -105,6 +118,27 @@ h1 {
     margin-bottom: 2rem;
 }
 
+.typing-target {
+    min-height: 1.6em;
+}
+
+.typing-target::after {
+    content: '█';
+    color: var(--neon-cyan);
+    animation: blink-cursor 0.8s step-end infinite;
+    font-weight: 400;
+}
+
+.typing-target.done::after {
+    animation: blink-cursor 1.2s step-end infinite;
+    opacity: 0.6;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 /* LAYOUT */
 .main-content {
     margin-left: 250px; /* offset for nav */
@@ -129,6 +163,93 @@ h1 {
     display: flex;
     flex-direction: column;
     z-index: 100;
+}
+
+/* ANIMATED CIRCUIT SVG */
+.circuit-svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    pointer-events: none;
+    overflow: visible;
+}
+
+/* Base traces — dim static lines like PCB copper */
+.circuit-trace.trace-base {
+    fill: none;
+    stroke: rgba(0, 229, 255, 0.08);
+    stroke-width: 1.5;
+    stroke-linecap: square;
+}
+
+/* Animated pulse traces */
+.circuit-trace.trace-pulse {
+    fill: none;
+    stroke: rgba(0, 229, 255, 0.6);
+    stroke-width: 1.5;
+    stroke-linecap: square;
+    filter: url(#circuit-glow);
+    stroke-dasharray: 12 80;
+    stroke-dashoffset: 0;
+}
+
+.pulse-1 { animation: circuit-pulse 3s linear infinite; }
+.pulse-2 { animation: circuit-pulse 4s linear infinite 0.8s; }
+.pulse-3 { animation: circuit-pulse 5s linear infinite 1.5s; }
+.pulse-4 { animation: circuit-pulse 6s linear infinite 2.2s; }
+.pulse-5 { animation: circuit-pulse-vertical 3.5s linear infinite 1s; }
+.pulse-bus { animation: circuit-pulse 2.5s linear infinite 0.3s; stroke: rgba(255, 171, 0, 0.5); }
+
+@keyframes circuit-pulse {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -200; }
+}
+
+@keyframes circuit-pulse-vertical {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -150; }
+}
+
+/* Junction nodes (solder pads) */
+.circuit-node {
+    fill: rgba(0, 229, 255, 0.15);
+    stroke: rgba(0, 229, 255, 0.3);
+    stroke-width: 1;
+}
+
+.circuit-node.node-end {
+    fill: rgba(0, 229, 255, 0.05);
+    stroke: rgba(0, 229, 255, 0.25);
+    stroke-width: 1.5;
+    animation: node-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes node-pulse {
+    0% { fill: rgba(0, 229, 255, 0.05); stroke: rgba(0, 229, 255, 0.2); }
+    100% { fill: rgba(0, 229, 255, 0.2); stroke: rgba(0, 229, 255, 0.5); }
+}
+
+/* IC Chip element */
+.circuit-chip {
+    fill: rgba(18, 26, 37, 0.9);
+    stroke: rgba(0, 229, 255, 0.25);
+    stroke-width: 1;
+}
+
+.circuit-chip-pin {
+    stroke: rgba(0, 229, 255, 0.2);
+    stroke-width: 1.5;
+    stroke-linecap: square;
+}
+
+.circuit-chip-label {
+    fill: rgba(0, 229, 255, 0.35);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: 1px;
 }
 
 .nav-header {
@@ -201,6 +322,32 @@ h1 {
     justify-content: center;
     padding-top: 2rem;
     padding-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.sys-section.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ambient Glow Behind Hero */
+#home {
+    position: relative;
+}
+
+#home::before {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .section-title {
@@ -272,6 +419,64 @@ h1 {
     height: 100%;
     object-fit: cover;
 }
+
+/* PID TREND CHART */
+.pid-trend-container {
+    margin: 2rem 0;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--panel-border);
+    border-left: 3px solid var(--neon-cyan);
+    overflow: hidden;
+}
+
+.pid-trend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: rgba(31, 44, 61, 0.5);
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.pid-trend-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.pid-trend-legend {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+}
+
+.legend-sp { color: #FFAB00; }
+.legend-pv { color: #00E5FF; }
+.legend-op { color: #00FF55; }
+
+#pid-trend-canvas {
+    display: block;
+    width: 100%;
+    height: 200px;
+    cursor: crosshair;
+}
+
+.pid-trend-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: rgba(31, 44, 61, 0.5);
+    border-top: 1px solid var(--panel-border);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+}
+
+.pid-tag { color: var(--text-dim); }
+.pid-mode { color: var(--neon-green); }
+.pid-values { color: var(--neon-cyan); }
 
 /* READOUTS */
 .data-readouts {
@@ -611,50 +816,199 @@ h1 {
     top: 0;
 }
 
+/* SYSTEM FOOTER */
+.sys-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid var(--panel-border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.sys-footer .sys-build { color: var(--text-dim); }
+.sys-footer .sys-clock { color: var(--neon-cyan); }
+
+/* STATUS NOTIFICATIONS */
+.sys-notifications {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.sys-notification {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: rgba(18, 26, 37, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-left: 3px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 0.6rem 1rem;
+    opacity: 0;
+    transform: translateX(40px);
+    animation: notif-in 0.4s ease forwards;
+    max-width: 320px;
+}
+
+.sys-notification.fade-out {
+    animation: notif-out 0.4s ease forwards;
+}
+
+@keyframes notif-in {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes notif-out {
+    to { opacity: 0; transform: translateX(40px); }
+}
+
+/* COUNT-UP VALUES */
+.readout .value {
+    font-variant-numeric: tabular-nums;
+}
+
+/* PREFERS REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+    .glitch::before, .glitch::after { animation: none !important; }
+    .status-led { animation: none !important; }
+    .boot-overlay { transition: none !important; }
+    .terminal-text span { animation: none !important; opacity: 1 !important; }
+    .sys-section { transition: none !important; opacity: 1 !important; transform: none !important; }
+    .project-panel { transition: none !important; }
+    .action-btn { transition: none !important; }
+    .sys-notification { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .bar { transition: none !important; }
+    .circuit-trace.trace-pulse { animation: none !important; }
+    .circuit-node.node-end { animation: none !important; }
+}
+
+/* HAMBURGER BUTTON — hidden on desktop */
+.hamburger {
+    display: none;
+    background: none;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 4px;
+    padding: 6px 5px;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 200;
+    transition: border-color 0.3s ease;
+}
+
+.hamburger:hover {
+    border-color: var(--neon-cyan);
+}
+
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--neon-cyan);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .main-content {
         margin-left: 0;
-        padding: 6rem 2rem 2rem;
+        padding: 5rem 1.5rem 2rem;
     }
     
     .nav-panel {
         width: 100%;
         height: auto;
-        padding: 1rem;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+        padding: 0.8rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
         border-right: none;
         border-bottom: 1px solid var(--panel-border);
     }
 
     .nav-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 0;
         border-bottom: none;
         padding-bottom: 0;
     }
 
     .sys-id { display: none; }
-    
+
+    .hamburger {
+        display: flex;
+    }
+
+    /* Collapsible nav links */
     .nav-links {
-        flex-direction: row;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        padding: 0;
+    }
+
+    .nav-panel.nav-open .nav-links {
+        max-height: 300px;
+        padding: 0.8rem 0 0.4rem;
     }
     
     .nav-link {
-        font-size: 0.7rem;
-        padding: 0.5rem;
-        border-left: none;
-        border-bottom: 2px solid transparent;
+        font-size: 0.85rem;
+        padding: 0.7rem 0.5rem;
+        border-left: 3px solid transparent;
+        border-bottom: none;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
     }
 
+    .nav-panel.nav-open .nav-link {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* Stagger the link reveals */
+    .nav-panel.nav-open .nav-links li:nth-child(1) .nav-link { transition-delay: 0.05s; }
+    .nav-panel.nav-open .nav-links li:nth-child(2) .nav-link { transition-delay: 0.10s; }
+    .nav-panel.nav-open .nav-links li:nth-child(3) .nav-link { transition-delay: 0.15s; }
+    .nav-panel.nav-open .nav-links li:nth-child(4) .nav-link { transition-delay: 0.20s; }
+
     .nav-link.active {
-        border-left-color: transparent;
-        border-bottom-color: var(--neon-cyan);
+        border-left-color: var(--neon-cyan);
+        border-bottom-color: transparent;
     }
     
     .about-content {
         grid-template-columns: 1fr;
+    }
+
+    .circuit-svg {
+        display: none;
     }
 }
